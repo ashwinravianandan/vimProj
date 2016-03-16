@@ -4,16 +4,18 @@ let g:projectEntries = []
 
 function! s:initialize()
    let l:FileName =  $HOME . "/.vimproj"
-   let l:projEntries = readfile( l:FileName )
-   for item in l:projEntries
-      if item !~ '^\s*"'
-         let l:projName = substitute( item, '^\s*\(.*\)\s*:.*','\1','g')
-         let l:projPath = substitute( item, '.*:\s*\(.*\)\s*$','\1','g')
-         let l:projDict = {}
-         let l:projDict[ l:projName ] = l:projPath
-         call add( g:projectEntries, l:projDict )
-      endif
-   endfor
+   if filereadable( l:FileName )
+      let l:projEntries = readfile( l:FileName )
+      for item in l:projEntries
+         if item !~ '^\s*"'
+            let l:projName = substitute( item, '^\s*\(.*\)\s*:.*','\1','g')
+            let l:projPath = substitute( item, '.*:\s*\(.*\)\s*$','\1','g')
+            let l:projDict = {}
+            let l:projDict[ l:projName ] = l:projPath
+            call add( g:projectEntries, l:projDict )
+         endif
+      endfor
+   endif
 endfunction
 
 function! SetProject( projectName )
