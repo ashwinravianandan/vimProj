@@ -11,7 +11,7 @@ function! s:set(var, default)
   endif
 endfunction
 
-call s:set('g:project_command_hook', "call s:default_hook()")
+call s:set('g:project_command_hook', "s:default_hook)")
 
 function! s:default_hook()
    enew
@@ -61,7 +61,8 @@ endfunction
 function! OpenProject( )
    let l:ProjName = input( "Enter Project: ","", "customlist,CompleteFunc" )
    if SetProject( l:ProjName )
-      execute g:project_command_hook
+      let Hook = function( g:project_command_hook )
+      call Hook()
    endif
 endfunction
 
